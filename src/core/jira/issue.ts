@@ -1,5 +1,7 @@
 import { get } from './request';
 
+import { Issue } from '../../types/issue';
+
 export async function getReadyForDeployIssues(board: string, sprint: Number, status: string) {
   const HOST = process.env.JIRA_HOST;
   const STATUS = status
@@ -10,9 +12,9 @@ export async function getReadyForDeployIssues(board: string, sprint: Number, sta
 
   const data = await get(path);
 
-  let issues = [];
+  let issues: Issue[] = [];
 
-  data.issues.forEach(issue => {
+  data.issues.forEach((issue: any) => {
     issues.push({
       id: issue.id,
       title: issue.key,
