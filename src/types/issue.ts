@@ -1,10 +1,12 @@
 export type Issue = {
-    id: number,
+	id: number,
 	title: string,
 	description: string,
 	priority: string,
+	resolutionDate: Date,
+	repositories?: String[],
 	assignee: {
-        name: string,
-	 	image: string
-    }
+		name: string,
+		image: string
+	}
 }

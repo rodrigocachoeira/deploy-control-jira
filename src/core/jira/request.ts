@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export async function get(path: string) {
   const token = new Buffer(process.env.JIRA_USERNAME + ':' + process.env.JIRA_TOKEN).toString('base64');
 
@@ -12,5 +10,5 @@ export async function get(path: string) {
 
   const data = fetch(path, options).then(response => response.json());
 
-  return data;
+  return await data;
 }
