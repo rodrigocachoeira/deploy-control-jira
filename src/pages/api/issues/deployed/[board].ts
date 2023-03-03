@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { getLastDeployedTasks, getRepositoriesOfIssue } from '../../../../core/jira/issue';
+import { getIssueData, getLastDeployedTasks, getRepositoriesOfIssue } from '../../../../core/jira/issue';
 import { getActiveSprintOfBoard } from '../../../../core/jira/sprint';
 
 export default async function handler(
@@ -14,9 +14,13 @@ export default async function handler(
   const lastDeploys = await getLastDeployedTasks(String(board), activeSprint);
 
   for(var i = 0; i < lastDeploys.length; i++) {
-    const repositories = await getRepositoriesOfIssue(lastDeploys[i].id);
+    const issueId = lastDeploys[i].id;
+
+    const issueData = await getIssueData(issueId);
+    const repositories = await getRepositoriesOfIssue(issueId);
 
     lastDeploys[i].repositories = repositories;
+    lastDeploys[i].summary = issueData.fields.summary;
   }
 
   res.status(200).json(lastDeploys);

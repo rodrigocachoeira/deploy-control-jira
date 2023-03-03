@@ -3,7 +3,7 @@ import { get } from './request';
 import moment from 'moment';
 import { Issue } from '../../types/issue';
 
-const RECENT_DEPLOYED_IN_HOURS = 30;
+const RECENT_DEPLOYED_IN_HOURS = 3;
 
 export async function getReadyForDeployIssues(board: string, sprint: Number, status: string) {
   const HOST = process.env.JIRA_HOST;
@@ -53,6 +53,10 @@ export async function getRepositoriesOfIssue(issueId: number) {
   const path = `${HOST}/rest/dev-status/1.0/issue/details?issueId=${issueId}&applicationType=github&dataType=pullrequest`;
   const data = await get(path);
 
+  if (data.detail.length == 0) {
+    return [];
+  }
+
   const repositories = data.detail[2].repositories.map(repository => {
     return repository.name.replaceAll('atlastechnol/', '');
   });
@@ -60,4 +64,13 @@ export async function getRepositoriesOfIssue(issueId: number) {
   return repositories.filter((value, index, self) => {
     return self.indexOf(value) === index
   });
+}
+
+export async function getIssueData(issueId: number) {
+  const HOST = process.env.JIRA_HOST;
+
+  const path = `${HOST}/rest/api/2/issue/${issueId}`;
+  const data = await get(path);
+
+  return data;
 }
