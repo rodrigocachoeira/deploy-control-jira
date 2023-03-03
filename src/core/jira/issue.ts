@@ -57,11 +57,11 @@ export async function getRepositoriesOfIssue(issueId: number) {
     return [];
   }
 
-  const repositories = data.detail[2].repositories.map(repository => {
+  const repositories = data.detail[2].repositories.map((repository: { name: string; }) => {
     return repository.name.replaceAll('atlastechnol/', '');
   });
 
-  return repositories.filter((value, index, self) => {
+  return repositories.filter((value: string, index: number, self: String[]) => {
     return self.indexOf(value) === index
   });
 }
