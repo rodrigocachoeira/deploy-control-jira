@@ -3,7 +3,7 @@ import { get } from './request';
 import moment from 'moment';
 import { Issue } from '../../types/issue';
 
-const RECENT_DEPLOYED_IN_HOURS = 3;
+const RECENT_DEPLOYED_IN_HOURS = 70;
 
 export async function getReadyForDeployIssues(board: string, sprint: Number, status: string) {
   const HOST = process.env.JIRA_HOST;

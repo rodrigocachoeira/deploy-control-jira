@@ -6,6 +6,10 @@ export type Issue = {
 	priority: string,
 	resolutionDate: Date,
 	repositories?: String[],
+	epic?: {
+		id: number;
+		title: string;
+	},
 	assignee: {
 		name: string,
 		image: string

@@ -21,6 +21,10 @@ export default async function handler(
 
     lastDeploys[i].repositories = repositories;
     lastDeploys[i].summary = issueData.fields.summary;
+    lastDeploys[i].epic = {
+      id: issueData.fields.parent.id,
+      title: issueData.fields.parent.fields.summary
+    };
   }
 
   res.status(200).json(lastDeploys);
