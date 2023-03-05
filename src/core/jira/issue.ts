@@ -66,7 +66,7 @@ export async function getRepositoriesOfIssue(issueId: number) {
   });
 }
 
-export async function getIssueData(issueId: number) {
+export async function getIssueData(issueId: number|string) {
   const HOST = process.env.JIRA_HOST;
 
   const path = `${HOST}/rest/api/2/issue/${issueId}`;
